@@ -51,6 +51,8 @@ class Scraper:
     def consume_url(self):
         data = [*self.urls,*self.scripts, *self.css_links, *self.imgs]
         # create dirs
+        print(data)
+        return
         for url in data:
             self.createDirs(url)
 
@@ -66,11 +68,10 @@ class Scraper:
 
         # create root dir
         main_path = os.path.join(os.getcwd(), self.root_folder, main_dir_name)
-    
         if not os.path.exists(main_path):
-            os.mkdir(main_path)
+            os.makedirs(main_path, exist_ok=True)
             # download index.html file
-            self.download_file(os.path.join(main_path), self.main_url)
+            # self.download_file(os.path.join(main_path), self.main_url)
         self.rootPath  = main_path
 
         
@@ -130,7 +131,7 @@ class Scraper:
             os.makedirs(os.path.dirname(fatal_path))
         # extract filename
 
-        # self.download_file(fatal_path, url)
+        self.download_file(fatal_path, url)
 
     def error(self, msg):
         raise Error('ConnectionError', msg)
